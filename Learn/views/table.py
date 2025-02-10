@@ -53,13 +53,7 @@ def show_employee_deduction(entry: EmployeeDeductionEntry) -> rx.Component:
                 ),
                 # Edit button
                 update_employee_dialog(entry),
-                rx.icon_button(
-                    rx.icon("trash-2", size=22),
-                    on_click=lambda: State.delete_employee(entry.id),
-                    size="2",
-                    variant="solid",
-                    color_scheme="red",
-                ),
+                confirm_delete_dialog(entry),
                 spacing="2",
             )
         ),
@@ -360,6 +354,64 @@ def update_employee_dialog(entry) -> rx.Component:
             border_radius="25px",
         ),
     )
+    
+def confirm_delete_dialog(entry) -> rx.Component:
+    """Displays a confirmation dialog before deleting an entry."""
+    return rx.alert_dialog.root(
+        rx.alert_dialog.trigger(
+            rx.icon_button(
+                rx.icon("trash-2", size=22),
+                size="2",
+                variant="solid",
+                color_scheme="red",
+            )
+        ),
+        rx.alert_dialog.content(
+            rx.alert_dialog.title("Delete Users"),
+            rx.alert_dialog.description(
+                "Are you sure you want to delete this user? This action is permanent and cannot be undone.",
+                size="2",
+            ),
+            rx.inset(
+                rx.table.root(
+                    rx.table.header(
+                        rx.table.row(
+                            rx.table.column_header_cell("Full Name"),
+                            rx.table.column_header_cell("NIP"),
+                        ),
+                    ),
+                    rx.table.body(
+                        rx.table.row(
+                            rx.table.cell(entry.name),
+                            rx.table.cell(entry.nip),
+                        ),
+                    ),
+                ),
+                side="x",
+                margin_top="24px",
+                margin_bottom="24px",
+            ),
+            rx.flex(
+                rx.alert_dialog.cancel(
+                    rx.button("Cancel", variant="soft", color_scheme="gray"),
+                ),
+                rx.alert_dialog.action(
+                    rx.button(
+                        "Delete user",
+                        color_scheme="red",
+                        on_click=lambda: State.delete_employee(entry.id), # Panggil fungsi backend
+                    ),
+                ),
+                spacing="3",
+                justify="end",
+            ),
+            style={"max_width": 500},
+        ),
+    )
+
+
+
+
 
 def _header_cell(text: str, icon: str) -> rx.Component:
     return rx.table.column_header_cell(
