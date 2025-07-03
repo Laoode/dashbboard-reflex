@@ -1,6 +1,6 @@
 # Employee Data Deductions App
 
-This app is used to showcase and edit tabular data live in an app. It links up with a persistent database, such as [Neon](https://neon.tech). 
+This app is used to showcase and edit tabular data live in an app with database used [Supabase](https://supabase.com/)  
 
 ## Usage 
 
