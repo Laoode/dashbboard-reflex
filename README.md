@@ -37,19 +37,6 @@ reflex db makemigrations --message "Brief description of the change"
 reflex db migrate
 ```
 
-## Setting an external Database
-
-It is also possible to set an external database so that your data is not lost every time the app closes and so you can deploy your app and maintain data. 
-
-In the `rxconfig.py` file we accept a `db_url` key and recognize the `DB_URL`
-environment variable. This can be set to any valid SQLAlchemy database URL.
-
-To set one run the following command in your terminal:
-
-```bash
-export DB_URL="postgresql+psycopg://appuser:mysecretpassword@localhost:5432/mydatabase"
-```
-
 **Be sure to install the appropriate DB driver in your environment.** In the
 *example above, that would be `pip install "psycopg[binary]"`.
 
